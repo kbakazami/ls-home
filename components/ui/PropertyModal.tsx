@@ -55,12 +55,12 @@ export default function PropertyModal({ property, onClose }: PropertyModalProps)
         </button>
 
         {/* Main image */}
-        <div className="relative aspect-[16/9] w-full">
+        <div className="relative aspect-video w-full">
           <Image
             src={property.images[activeIndex]}
             alt={`${property.title} — photo ${activeIndex + 1}`}
             fill
-            className="object-cover"
+            className="object-cover object-top brightness-110 contrast-90"
             sizes="(max-width: 768px) 100vw, 768px"
           />
           <span className="absolute left-4 bottom-4 bg-primary-light px-3 py-1 text-xs font-semibold uppercase tracking-wider text-primary-dark">
@@ -77,7 +77,7 @@ export default function PropertyModal({ property, onClose }: PropertyModalProps)
                 type="button"
                 onClick={() => setActiveIndex(i)}
                 className={cn(
-                  'relative h-16 w-24 flex-shrink-0 overflow-hidden border-2 transition-colors',
+                  'relative h-12 w-18 flex-shrink-0 overflow-hidden border-2 transition-colors',
                   i === activeIndex
                     ? 'border-primary'
                     : 'border-transparent opacity-60 hover:opacity-100',
@@ -87,7 +87,7 @@ export default function PropertyModal({ property, onClose }: PropertyModalProps)
                   src={img}
                   alt={`${property.title} — miniature ${i + 1}`}
                   fill
-                  className="object-cover"
+                  className="object-cover object-center brightness-110 contrast-90"
                   sizes="96px"
                 />
               </button>

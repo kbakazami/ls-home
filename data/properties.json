@@ -134,5 +134,153 @@
       "https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=800&q=80",
       "https://images.unsplash.com/photo-1600573472592-401b489a3cdc?w=800&q=80"
     ]
+  },
+  {
+    "id": "appartement-t1",
+    "title": "Appartement T1",
+    "type": "Appartement",
+    "price_rent": 800,
+    "price_buy": 31000,
+    "habitants": 2,
+    "capacity": 200,
+    "featured": false,
+    "description": "Petite appartement confort de 2 pièces",
+    "images": [
+      "https://res.cloudinary.com/deuffnoso/image/upload/q_auto/f_auto/v1776111776/t1_1_bqnrnn.jpg",
+      "https://res.cloudinary.com/deuffnoso/image/upload/q_auto/f_auto/v1776111872/t1_2_fr3awg.jpg",
+      "https://res.cloudinary.com/deuffnoso/image/upload/q_auto/f_auto/v1776109391/t1_3_i4acp0.jpg"
+    ]
+  },
+  {
+    "id": "appartement-t1-bis",
+    "title": "Appartement T1 Bis",
+    "type": "Appartement",
+    "price_rent": 1050,
+    "price_buy": 40500,
+    "habitants": 2,
+    "capacity": 200,
+    "featured": false,
+    "description": "Appartement tout juste rénové et moderne",
+    "images": [
+      "https://res.cloudinary.com/deuffnoso/image/upload/q_auto/f_auto/v1776109392/t1_bis_1_d7l2ot.jpg",
+      "https://res.cloudinary.com/deuffnoso/image/upload/q_auto/f_auto/v1776109392/t1_bis_2_msyhdb.jpg",
+      "https://res.cloudinary.com/deuffnoso/image/upload/q_auto/f_auto/v1776109392/t1_bis_3_ziagnz.jpg",
+      "https://res.cloudinary.com/deuffnoso/image/upload/q_auto/f_auto/v1776109392/t1_bis_4_fcnkg9.jpg",
+      "https://res.cloudinary.com/deuffnoso/image/upload/q_auto/f_auto/v1776109392/t1_bis_5_gpt6nr.jpg",
+      "https://res.cloudinary.com/deuffnoso/image/upload/q_auto/f_auto/v1776109392/t1_bis_6_a22nf5.jpg"
+    ]
+  },
+  {
+    "id": "appartement-t2",
+    "title": "Appartement T2",
+    "type": "Appartement",
+    "price_rent": 1850,
+    "price_buy": 70000,
+    "habitants": 2,
+    "capacity": 300,
+    "featured": false,
+    "description": "Appartement au designe rustique et spacieux",
+    "images": [
+      "https://res.cloudinary.com/deuffnoso/image/upload/q_auto/f_auto/v1776109392/t2_3_qqmr2y.jpg",
+      "https://res.cloudinary.com/deuffnoso/image/upload/q_auto/f_auto/v1776109392/t2_2_wdxzhh.jpg",
+      "https://res.cloudinary.com/deuffnoso/image/upload/q_auto/f_auto/v1776109392/t2_1_psmylq.png",
+      "https://res.cloudinary.com/deuffnoso/image/upload/q_auto/f_auto/v1776109392/t2_4_ybbf4i.jpg",
+      "https://res.cloudinary.com/deuffnoso/image/upload/q_auto/f_auto/v1776109393/t2_5_ep8enz.jpg",
+      "https://res.cloudinary.com/deuffnoso/image/upload/q_auto/f_auto/v1776109393/t2_6_w0ihkl.jpg",
+      "https://res.cloudinary.com/deuffnoso/image/upload/q_auto/f_auto/v1776109393/t2_7_tuhmro.jpg"
+    ]
+  },
+  {
+    "id": "appartement-t3",
+    "title": "Appartement T3",
+    "type": "Appartement",
+    "price_rent": 2200,
+    "price_buy": 90000,
+    "habitants": 2,
+    "capacity": 300,
+    "featured": false,
+    "description": "Appartement spacieux, moderne et bien éclairé",
+    "images": [
+      "https://res.cloudinary.com/deuffnoso/image/upload/q_auto/f_auto/v1776109393/t3_4_mg6xrk.jpg",
+      "https://res.cloudinary.com/deuffnoso/image/upload/q_auto/f_auto/v1776109393/t3_2_dch1sp.jpg",
+      "https://res.cloudinary.com/deuffnoso/image/upload/q_auto/f_auto/v1776109393/t3_3_thvrhg.jpg",
+      "https://res.cloudinary.com/deuffnoso/image/upload/q_auto/f_auto/v1776109393/t3_1_yvbbgf.png",
+      "https://res.cloudinary.com/deuffnoso/image/upload/q_auto/f_auto/v1776109393/t3_5_u0ohii.jpg",
+      "https://res.cloudinary.com/deuffnoso/image/upload/q_auto/f_auto/v1776109394/t3_6_h9eabs.jpg",
+      "https://res.cloudinary.com/deuffnoso/image/upload/q_auto/f_auto/v1776111351/t3_7_dsoegc.jpg",
+      "https://res.cloudinary.com/deuffnoso/image/upload/q_auto/f_auto/v1776109394/t3_8_kds6ne.jpg",
+      "https://res.cloudinary.com/deuffnoso/image/upload/q_auto/f_auto/v1776109394/t3_9_cpukan.jpg"
+    ]
+  },
+  {
+    "id": "penthouse-1",
+    "title": "Penthouse Luxueux 1",
+    "type": "Penthouse",
+    "price_rent": 4800,
+    "price_buy": 148000,
+    "habitants": 3,
+    "capacity": 350,
+    "featured": false,
+    "description": "Penthouse Luxueux avec bonne situation, moderne et spacieux",
+    "images": [
+      "https://res.cloudinary.com/deuffnoso/image/upload/q_auto/f_auto/v1776113779/appart_luxe_1_1_tmjbtm.jpg",
+      "https://res.cloudinary.com/deuffnoso/image/upload/q_auto/f_auto/v1776113780/appart_luxe_1_2_bcc84k.jpg",
+      "https://res.cloudinary.com/deuffnoso/image/upload/q_auto/f_auto/v1776113782/appart_luxe_1_3_hmikom.jpg",
+      "https://res.cloudinary.com/deuffnoso/image/upload/q_auto/f_auto/v1776113783/appart_luxe_1_4_ng4exm.jpg",
+      "https://res.cloudinary.com/deuffnoso/image/upload/q_auto/f_auto/v1776113784/appart_luxe_1_5_neffvn.jpg",
+      "https://res.cloudinary.com/deuffnoso/image/upload/q_auto/f_auto/v1776113785/appart_luxe_1_6_xhjytx.jpg",
+      "https://res.cloudinary.com/deuffnoso/image/upload/q_auto/f_auto/v1776113787/appart_luxe_1_7_zvevjj.jpg",
+      "https://res.cloudinary.com/deuffnoso/image/upload/q_auto/f_auto/v1776113778/appart_luxe_2_8_mf6v4h.jpg",
+      "https://res.cloudinary.com/deuffnoso/image/upload/q_auto/f_auto/v1776113776/appart_luxe_2_7_zhfrj2.jpg"
+    ]
+  },
+  {
+    "id": "penthouse-2",
+    "title": "Penthouse Luxueux 2",
+    "type": "Penthouse",
+    "price_rent": 5800,
+    "price_buy": 158000,
+    "habitants": 3,
+    "capacity": 350,
+    "featured": false,
+    "description": "Penthouse Luxueux avec bonne situation, moderne et spacieux",
+    "images": [
+      "https://res.cloudinary.com/deuffnoso/image/upload/q_auto/f_auto/v1776113769/appart_luxe_2_1_gd8r2t.jpg",
+      "https://res.cloudinary.com/deuffnoso/image/upload/q_auto/f_auto/v1776113772/appart_luxe_2_2_haf8eb.jpg",
+      "https://res.cloudinary.com/deuffnoso/image/upload/q_auto/f_auto/v1776113771/appart_luxe_2_3_q2g2hg.jpg",
+      "https://res.cloudinary.com/deuffnoso/image/upload/q_auto/f_auto/v1776113773/appart_luxe_2_4_rdm3mw.jpg",
+      "https://res.cloudinary.com/deuffnoso/image/upload/q_auto/f_auto/v1776113774/appart_luxe_2_5_armcaw.jpg",
+      "https://res.cloudinary.com/deuffnoso/image/upload/q_auto/f_auto/v1776113777/appart_luxe_2_6_tsmp3l.jpg",
+      "https://res.cloudinary.com/deuffnoso/image/upload/q_auto/f_auto/v1776113769/appart_luxe_1_9_ufnnjf.jpg",
+      "https://res.cloudinary.com/deuffnoso/image/upload/q_auto/f_auto/v1776113768/appart_luxe_1_8_cfqipr.jpg"
+    ]
+  },
+  {
+    "id": "villa-1",
+    "title": "Villa plain pied 1",
+    "type": "Villa",
+    "price_rent": 7000,
+    "price_buy": 300000,
+    "habitants": 2,
+    "capacity": 500,
+    "featured": false,
+    "description": "Villa plain pied moderne et spacieuse",
+    "images": [
+      "https://res.cloudinary.com/deuffnoso/image/upload/q_auto/f_auto/v1776114554/villa_plain_pied_1_1_zecnqd.jpg",
+      "https://res.cloudinary.com/deuffnoso/image/upload/q_auto/f_auto/v1776114557/villa_plain_pied_1_2_h4kd6d.jpg",
+      "https://res.cloudinary.com/deuffnoso/image/upload/q_auto/f_auto/v1776114555/villa_plain_pied_1_3_tcykv1.jpg",
+      "https://res.cloudinary.com/deuffnoso/image/upload/q_auto/f_auto/v1776114556/villa_plain_pied_1_4_fhqyjb.jpg",
+      "https://res.cloudinary.com/deuffnoso/image/upload/q_auto/f_auto/v1776114556/villa_plain_pied_1_5_rhurpw.jpg",
+      "https://res.cloudinary.com/deuffnoso/image/upload/q_auto/f_auto/v1776114556/villa_plain_pied_1_6_p237if.jpg",
+      "https://res.cloudinary.com/deuffnoso/image/upload/q_auto/f_auto/v1776114560/villa_plain_pied_1_7_md9ylm.jpg",
+      "https://res.cloudinary.com/deuffnoso/image/upload/q_auto/f_auto/v1776114557/villa_plain_pied_1_8_ynechx.jpg",
+      "https://res.cloudinary.com/deuffnoso/image/upload/q_auto/f_auto/v1776114558/villa_plain_pied_1_9_mobxxy.jpg",
+      "https://res.cloudinary.com/deuffnoso/image/upload/q_auto/f_auto/v1776114559/villa_plain_pied_1_10_r8l24s.jpg",
+      "https://res.cloudinary.com/deuffnoso/image/upload/q_auto/f_auto/v1776114558/villa_plain_pied_1_11_wvukjx.jpg",
+      "https://res.cloudinary.com/deuffnoso/image/upload/q_auto/f_auto/v1776114559/villa_plain_pied_1_12_fm6f96.jpg",
+      "https://res.cloudinary.com/deuffnoso/image/upload/q_auto/f_auto/v1776114560/villa_plain_pied_1_13_sriqim.jpg",
+      "https://res.cloudinary.com/deuffnoso/image/upload/q_auto/f_auto/v1776114563/villa_plain_pied_1_14_angmhe.jpg",
+      "https://res.cloudinary.com/deuffnoso/image/upload/q_auto/f_auto/v1776114561/villa_plain_pied_1_15_ycdoxi.jpg"
+    ]
   }
 ]

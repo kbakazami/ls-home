@@ -18,12 +18,12 @@ export default function PropertyCard({ property, onClick, priority = false }: Pr
       onClick={onClick}
     >
       {/* Image */}
-      <div className="relative aspect-[4/3] overflow-hidden">
+      <div className="relative h-48 overflow-hidden">
         <Image
           src={property.images[0]}
           alt={property.title}
           fill
-          className="object-cover transition-transform duration-500 group-hover:scale-105"
+          className="object-cover object-center brightness-110 contrast-90 transition-transform duration-500 group-hover:scale-105"
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             priority={priority}
         />
