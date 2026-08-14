@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { formatOptionalPrice } from '@/lib/format'
+import { formatCapacity, formatOptionalPrice } from '@/lib/format'
 import type { Property } from '@/types/property'
 
 /** Visuel neutre affiche tant qu'aucune photo n'a ete televersee. */
@@ -43,7 +43,7 @@ export default function PropertyCard({ property, onClick, priority = false }: Pr
           <span>📍 Location : {formatOptionalPrice(property.price_rent)}</span>
           <span>🏠 Achat : {formatOptionalPrice(property.price_buy)}</span>
           <span>👥 Habitabilité : {property.habitants} habitant{property.habitants > 1 ? 's' : ''}</span>
-          <span>📦 Capacité : {property.capacity} kg</span>
+          <span>📦 Capacité : {formatCapacity(property.capacity_min, property.capacity_max)}</span>
         </div>
       </div>
     </article>

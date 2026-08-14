@@ -244,17 +244,51 @@ export default function PropertyForm({
           />
         </Field>
 
-        <Field label="Capacite de stockage (kg)" htmlFor="capacity" error={errors.capacity}>
-          <input
-            id="capacity"
-            name="capacity"
-            type="number"
-            min={0}
-            defaultValue={property?.capacity ?? 0}
-            className={inputClass}
-          />
+        <Field
+          label="Capacite de stockage (kg)"
+          htmlFor="capacity_min"
+          error={errors.capacity_min ?? errors.capacity_max}
+          hint="Mettez la meme valeur des deux cotes pour une capacite fixe."
+        >
+          <div className="flex items-center gap-3">
+            <input
+              id="capacity_min"
+              name="capacity_min"
+              type="number"
+              min={0}
+              defaultValue={property?.capacity_min ?? 0}
+              aria-label="Capacite minimum"
+              className={inputClass}
+            />
+            <span className="text-muted">&ndash;</span>
+            <input
+              id="capacity_max"
+              name="capacity_max"
+              type="number"
+              min={0}
+              defaultValue={property?.capacity_max ?? 0}
+              aria-label="Capacite maximum"
+              className={inputClass}
+            />
+          </div>
         </Field>
       </div>
+
+      <Field
+        label="Coloris"
+        htmlFor="coloris"
+        error={errors.coloris}
+        hint="Texte libre, laissez vide si non concerne. Ex. : Beige, Vert, Bleu"
+      >
+        <input
+          id="coloris"
+          name="coloris"
+          maxLength={120}
+          placeholder="Beige, Vert, Bleu"
+          defaultValue={property?.coloris ?? ''}
+          className={inputClass}
+        />
+      </Field>
 
       <Field label="Description" htmlFor="description" error={errors.description}>
         <textarea

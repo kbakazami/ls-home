@@ -29,7 +29,9 @@ const formSchema = z.object({
   price_rent: z.coerce.number().int().positive('Indiquez un montant').nullable(),
   price_buy: z.coerce.number().int().positive('Indiquez un montant').nullable(),
   habitants: z.coerce.number().int().min(0, 'Doit etre positif'),
-  capacity: z.coerce.number().int().min(0, 'Doit etre positif'),
+  capacity_min: z.coerce.number().int().min(0, 'Doit etre positif'),
+  capacity_max: z.coerce.number().int().min(0, 'Doit etre positif'),
+  coloris: z.string().trim().max(120, 'Trop long'),
   sort_order: z.coerce.number().int(),
   description: z.string().trim(),
   featured: z.coerce.boolean(),
@@ -39,6 +41,10 @@ const formSchema = z.object({
   .refine((v) => v.price_rent !== null || v.price_buy !== null, {
     message: 'Le bien doit etre disponible au moins a la location ou a l\'achat',
     path: ['price_rent'],
+  })
+  .refine((v) => v.capacity_min <= v.capacity_max, {
+    message: 'Le minimum ne peut pas depasser le maximum',
+    path: ['capacity_min'],
   })
 
 function parseForm(formData: FormData) {
@@ -64,7 +70,9 @@ function parseForm(formData: FormData) {
     price_rent: rentAvailable ? formData.get('price_rent') || 0 : null,
     price_buy: buyAvailable ? formData.get('price_buy') || 0 : null,
     habitants: formData.get('habitants') || 0,
-    capacity: formData.get('capacity') || 0,
+    capacity_min: formData.get('capacity_min') || 0,
+    capacity_max: formData.get('capacity_max') || 0,
+    coloris: formData.get('coloris') ?? '',
     sort_order: formData.get('sort_order') || 0,
     description: formData.get('description') ?? '',
     featured: formData.get('featured') === 'on',

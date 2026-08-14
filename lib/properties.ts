@@ -6,7 +6,7 @@ import type { Property } from '@/types/property'
  * Explicite plutôt que `*` pour éviter les surprises à l'ajout d'une colonne.
  */
 const COLUMNS =
-  'id, title, type, price_rent, price_buy, habitants, capacity, featured, published, description, images, sort_order'
+  'id, title, type, price_rent, price_buy, habitants, capacity_min, capacity_max, coloris, featured, published, description, images, sort_order'
 
 /** Biens visibles sur le catalogue public. */
 export async function getPublishedProperties(): Promise<Property[]> {

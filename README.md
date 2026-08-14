@@ -31,6 +31,7 @@ npm run dev
    - `0001_init.sql` — tables `properties` et `profiles`, politiques RLS, bucket `property-images`
    - `0002_property_types.sql` — table `property_types`, categories gerables depuis l'administration
    - `0003_optional_prices.sql` — prix optionnels : un bien peut n'etre qu'a la location ou qu'a la vente
+   - `0004_coloris_capacity_range.sql` — champ coloris, capacite exprimee en plage
 3. Dans **Settings → API**, recuperer :
    - `Project URL` → `NEXT_PUBLIC_SUPABASE_URL`
    - cle `anon public` → `NEXT_PUBLIC_SUPABASE_ANON_KEY`
@@ -86,6 +87,12 @@ annonce, ou pour retirer un bien vendu sans le supprimer.
 (ou *a la location*) desactive le champ de prix correspondant. Le site affiche alors
 « Non disponible » a la place du montant. Un bien doit rester disponible par au moins
 un des deux canaux — la base le verifie.
+
+**Capacite** : saisie sous forme de plage (« 300 &ndash; 500 kg »). Pour une capacite fixe,
+mettez la meme valeur des deux cotes : le site affiche alors « 300 kg ».
+
+**Coloris** : texte libre, affiche dans la fiche detaillee du bien. Laisse vide, rien
+n'est affiche.
 
 **Categories** : `/admin/categories` gere la liste des types proposes dans le formulaire.
 Renommer une categorie met a jour tous les biens qui l'utilisent (cle etrangere en

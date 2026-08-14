@@ -10,6 +10,13 @@ export function formatOptionalPrice(value: number | null): string {
   return value === null ? 'Non disponible' : formatPrice(value)
 }
 
+/** Capacite de stockage : « 300 - 500 kg », ou « 300 kg » si les bornes sont egales. */
+export function formatCapacity(min: number, max: number): string {
+  return min === max
+    ? `${numberFormatter.format(max)} kg`
+    : `${numberFormatter.format(min)} - ${numberFormatter.format(max)} kg`
+}
+
 /** Transforme un titre en slug utilisable comme identifiant de bien. */
 export function slugify(value: string): string {
   return value

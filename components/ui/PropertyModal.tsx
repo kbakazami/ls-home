@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
-import { formatOptionalPrice } from '@/lib/format'
+import { formatCapacity, formatOptionalPrice } from '@/lib/format'
 import { PLACEHOLDER_IMAGE } from '@/components/ui/PropertyCard'
 import type { Property } from '@/types/property'
 
@@ -116,9 +116,21 @@ export default function PropertyModal({ property, onClose }: PropertyModalProps)
             </div>
             <div>
               <p className="text-xs uppercase tracking-widest text-muted">📦 Capacité</p>
-              <p className="mt-1 text-lg font-semibold text-dark">{property.capacity} kg</p>
+              <p className="mt-1 text-lg font-semibold text-dark">
+                {formatCapacity(property.capacity_min, property.capacity_max)}
+              </p>
             </div>
           </div>
+
+          {property.coloris && (
+            <p className="mt-6 text-sm text-dark">
+              <span className="text-xs uppercase tracking-widest text-muted">
+                Coloris
+              </span>
+              <br />
+              {property.coloris}
+            </p>
+          )}
 
           {/* Description */}
           <p className="mt-6 leading-relaxed text-dark/80">

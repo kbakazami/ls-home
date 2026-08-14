@@ -26,7 +26,11 @@ export const propertySchema = z.object({
   price_rent: z.number().int().positive().nullable(),
   price_buy: z.number().int().positive().nullable(),
   habitants: z.number().int().min(0),
-  capacity: z.number().int().min(0),
+  // Capacite de stockage exprimee en plage. Bornes egales = valeur fixe.
+  capacity_min: z.number().int().min(0),
+  capacity_max: z.number().int().min(0),
+  /** Coloris disponibles, texte libre. Ex. « Beige, Vert, Bleu ». */
+  coloris: z.string(),
   featured: z.boolean(),
   published: z.boolean(),
   description: z.string(),
