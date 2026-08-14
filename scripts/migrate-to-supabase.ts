@@ -9,7 +9,7 @@
 import { readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { createScriptClient } from './supabase'
-import { PROPERTY_TYPES, type PropertyType } from '../types/property'
+import { createTypeResolver } from './property-types'
 
 interface LegacyProperty {
   id: string
@@ -24,22 +24,14 @@ interface LegacyProperty {
   images: string[]
 }
 
-function normalizeType(value: string): PropertyType {
-  const match = PROPERTY_TYPES.find(
-    (t) => t.toLowerCase() === value.trim().toLowerCase(),
-  )
-  if (!match) {
-    console.warn(`⚠️  Type inconnu « ${value} » → reclasse en « Autre »`)
-    return 'Autre'
-  }
-  return match
-}
-
 async function main() {
   const jsonPath = resolve(process.cwd(), 'data', 'properties.json')
   const legacy: LegacyProperty[] = JSON.parse(readFileSync(jsonPath, 'utf-8'))
 
   console.log(`📦 ${legacy.length} bien(s) lus depuis data/properties.json`)
+
+  const supabase = createScriptClient()
+  const normalizeType = await createTypeResolver(supabase)
 
   const rows = legacy.map((p, index) => ({
     id: p.id,
@@ -56,7 +48,6 @@ async function main() {
     sort_order: index,
   }))
 
-  const supabase = createScriptClient()
   const { error } = await supabase
     .from('properties')
     .upsert(rows, { onConflict: 'id' })

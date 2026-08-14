@@ -6,11 +6,12 @@ import Link from 'next/link'
 import ImageUploader from '@/components/admin/ImageUploader'
 import { slugify } from '@/lib/format'
 import { cn } from '@/lib/utils'
-import { PROPERTY_TYPES, type Property } from '@/types/property'
+import type { Property, PropertyTypeOption } from '@/types/property'
 import type { ActionState } from '@/app/admin/actions'
 
 interface PropertyFormProps {
   action: (state: ActionState, formData: FormData) => Promise<ActionState>
+  types: PropertyTypeOption[]
   property?: Property
   submitLabel: string
 }
@@ -65,6 +66,7 @@ function SubmitButton({ label }: { label: string }) {
 
 export default function PropertyForm({
   action,
+  types,
   property,
   submitLabel,
 }: PropertyFormProps) {
@@ -127,16 +129,21 @@ export default function PropertyForm({
           />
         </Field>
 
-        <Field label="Type de bien" htmlFor="type" error={errors.type}>
+        <Field
+          label="Categorie"
+          htmlFor="type"
+          error={errors.type}
+          hint="Gerez la liste depuis l'onglet Categories."
+        >
           <select
             id="type"
             name="type"
-            defaultValue={property?.type ?? 'Appartement'}
+            defaultValue={property?.type ?? types[0]?.label ?? ''}
             className={inputClass}
           >
-            {PROPERTY_TYPES.map((t) => (
-              <option key={t} value={t}>
-                {t}
+            {types.map((t) => (
+              <option key={t.id} value={t.label}>
+                {t.label}
               </option>
             ))}
           </select>

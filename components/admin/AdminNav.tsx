@@ -7,6 +7,7 @@ import { cn } from '@/lib/utils'
 const LINKS = [
   { href: '/admin', label: 'Tableau de bord', exact: true },
   { href: '/admin/biens', label: 'Biens', exact: false },
+  { href: '/admin/categories', label: 'Categories', exact: false },
   { href: '/admin/agents', label: 'Agents', exact: false, adminOnly: true },
 ]
 

@@ -11,7 +11,7 @@
 import { parse } from 'csv-parse/sync'
 import { createScriptClient } from './supabase'
 import { loadEnv, requireEnv } from './env'
-import { PROPERTY_TYPES, type PropertyType } from '../types/property'
+import { createTypeResolver } from './property-types'
 
 loadEnv()
 const sheetId = requireEnv('GOOGLE_SHEET_ID')
@@ -21,18 +21,10 @@ function toBool(value: string | undefined): boolean {
   return (value ?? '').trim().toLowerCase() === 'oui'
 }
 
-function normalizeType(value: string | undefined): PropertyType {
-  const match = PROPERTY_TYPES.find(
-    (t) => t.toLowerCase() === (value ?? '').trim().toLowerCase(),
-  )
-  if (!match) {
-    console.warn(`⚠️  Type inconnu « ${value} » → reclasse en « Autre »`)
-    return 'Autre'
-  }
-  return match
-}
-
 async function main() {
+  const supabase = createScriptClient()
+  const normalizeType = await createTypeResolver(supabase)
+
   console.log('📥 Fetch du Google Sheet...')
 
   const response = await fetch(url)
@@ -71,7 +63,6 @@ async function main() {
     process.exit(1)
   }
 
-  const supabase = createScriptClient()
   const { error } = await supabase
     .from('properties')
     .upsert(rows, { onConflict: 'id' })

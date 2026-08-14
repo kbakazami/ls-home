@@ -27,9 +27,9 @@ npm run dev
 ## Configuration Supabase
 
 1. Creer un projet sur [supabase.com](https://supabase.com).
-2. Ouvrir **SQL Editor**, coller le contenu de `supabase/migrations/0001_init.sql` et l'executer.
-   Cela cree les tables `properties` et `profiles`, les politiques RLS et le bucket
-   de stockage `property-images`.
+2. Ouvrir **SQL Editor** et executer les migrations de `supabase/migrations/` **dans l'ordre** :
+   - `0001_init.sql` — tables `properties` et `profiles`, politiques RLS, bucket `property-images`
+   - `0002_property_types.sql` — table `property_types`, categories gerables depuis l'administration
 3. Dans **Settings → API**, recuperer :
    - `Project URL` → `NEXT_PUBLIC_SUPABASE_URL`
    - cle `anon public` → `NEXT_PUBLIC_SUPABASE_ANON_KEY`
@@ -76,6 +76,7 @@ Accessible sur `/admin`, protegee par compte (`proxy.ts` redirige vers `/login`)
 | `/admin/biens` | Liste, recherche, filtres, bascules publie / en vedette |
 | `/admin/biens/nouveau` | Creation d'un bien |
 | `/admin/biens/[id]` | Edition et suppression |
+| `/admin/categories` | Types de biens : ajout, renommage, ordre, suppression |
 | `/admin/agents` | Gestion des comptes — reserve aux administrateurs |
 
 **Ajouter un bien** : `/admin/biens/nouveau` → remplir le formulaire, glisser-deposer
@@ -84,6 +85,12 @@ Le bien apparait immediatement sur `/properties`, sans redeploiement.
 
 Un bien laisse en brouillon reste invisible du public — pratique pour preparer une
 annonce, ou pour retirer un bien vendu sans le supprimer.
+
+**Categories** : `/admin/categories` gere la liste des types proposes dans le formulaire.
+Renommer une categorie met a jour tous les biens qui l'utilisent (cle etrangere en
+`on update cascade`) ; une categorie encore rattachee a un bien ne peut pas etre
+supprimee (`on delete restrict`). Le catalogue public derive ses filtres des biens
+publies : une categorie sans bien publie n'y apparait pas.
 
 **Roles** : un `agent` gere les biens ; un `admin` gere en plus les comptes.
 
@@ -127,6 +134,7 @@ components/
 lib/
   supabase/        Clients navigateur / serveur / service_role
   properties.ts    Lecture des biens
+  property-types.ts Lecture des categories
   auth.ts          requireAgent / requireAdmin
   format.ts        formatPrice, slugify
 scripts/           migrate-to-supabase.ts, sync.ts

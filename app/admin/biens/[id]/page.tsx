@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import PropertyForm from '@/components/admin/PropertyForm'
 import DeletePropertyButton from '@/components/admin/DeletePropertyButton'
 import { getPropertyById } from '@/lib/properties'
+import { getPropertyTypes } from '@/lib/property-types'
 import { updateProperty } from '@/app/admin/actions'
 
 export const dynamic = 'force-dynamic'
@@ -13,7 +14,10 @@ export default async function EditPropertyPage({
   params: Promise<{ id: string }>
 }) {
   const { id } = await params
-  const property = await getPropertyById(id)
+  const [property, types] = await Promise.all([
+    getPropertyById(id),
+    getPropertyTypes(),
+  ])
 
   if (!property) notFound()
 
@@ -40,6 +44,7 @@ export default async function EditPropertyPage({
       <div className="mt-8">
         <PropertyForm
           action={updateProperty}
+          types={types}
           property={property}
           submitLabel="Enregistrer"
         />

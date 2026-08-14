@@ -5,7 +5,6 @@ import { redirect } from 'next/navigation'
 import { z } from 'zod'
 import { createClient } from '@/lib/supabase/server'
 import { requireAgent } from '@/lib/auth'
-import { PROPERTY_TYPES } from '@/types/property'
 
 export interface ActionState {
   error?: string
@@ -24,7 +23,8 @@ const formSchema = z.object({
     .min(1, 'Identifiant requis')
     .regex(/^[a-z0-9-]+$/, 'Minuscules, chiffres et tirets uniquement'),
   title: z.string().trim().min(1, 'Titre requis'),
-  type: z.enum(PROPERTY_TYPES),
+  // La validite est garantie par la cle etrangere vers `property_types`.
+  type: z.string().trim().min(1, 'Categorie requise'),
   price_rent: z.coerce.number().int().min(0, 'Doit etre positif'),
   price_buy: z.coerce.number().int().min(0, 'Doit etre positif'),
   habitants: z.coerce.number().int().min(0, 'Doit etre positif'),
@@ -100,6 +100,9 @@ export async function createProperty(
     if (error.code === '23505') {
       return { fieldErrors: { id: 'Cet identifiant est deja utilise.' } }
     }
+    if (error.code === '23503') {
+      return { fieldErrors: { type: "Cette categorie n'existe plus." } }
+    }
     return { error: `Enregistrement impossible : ${error.message}` }
   }
 
@@ -140,6 +143,9 @@ export async function updateProperty(
   if (error) {
     if (error.code === '23505') {
       return { fieldErrors: { id: 'Cet identifiant est deja utilise.' } }
+    }
+    if (error.code === '23503') {
+      return { fieldErrors: { type: "Cette categorie n'existe plus." } }
     }
     return { error: `Enregistrement impossible : ${error.message}` }
   }
