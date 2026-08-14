@@ -29,6 +29,19 @@ export default function PropertyGrid({ properties }: PropertyGridProps) {
     [properties, selectedType],
   )
 
+  if (properties.length === 0) {
+    return (
+      <div className="border border-border bg-surface px-6 py-16 text-center">
+        <p className="font-display text-lg text-dark">
+          Aucun bien n&apos;est disponible pour le moment.
+        </p>
+        <p className="mt-2 text-sm text-muted">
+          Notre catalogue est en cours de mise a jour. Revenez tres vite.
+        </p>
+      </div>
+    )
+  }
+
   return (
     <>
       {/* Filters */}

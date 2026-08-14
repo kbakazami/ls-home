@@ -20,8 +20,9 @@
   --color-surface: var(--color-surface);
   --color-muted: var(--color-muted);
   --color-border: var(--color-border);
-  --font-sans: var(--font-inter);
-  --font-display: var(--font-playfair);
+  /* Definies par next/font dans app/layout.tsx */
+  --font-sans: var(--font-body);
+  --font-display: var(--font-display);
 }
 
 body {

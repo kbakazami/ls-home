@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
+import { formatPrice } from '@/lib/format'
+import { PLACEHOLDER_IMAGE } from '@/components/ui/PropertyCard'
 import type { Property } from '@/types/property'
 
 interface PropertyModalProps {
@@ -13,9 +15,6 @@ interface PropertyModalProps {
 
 export default function PropertyModal({ property, onClose }: PropertyModalProps) {
   const [activeIndex, setActiveIndex] = useState(0)
-
-  const formatPrice = (value: number) =>
-    new Intl.NumberFormat('fr-FR').format(value) + ' $'
 
   useEffect(() => {
     document.body.style.overflow = 'hidden'
@@ -57,7 +56,7 @@ export default function PropertyModal({ property, onClose }: PropertyModalProps)
         {/* Main image */}
         <div className="relative aspect-video w-full">
           <Image
-            src={property.images[activeIndex]}
+            src={property.images[activeIndex] ?? PLACEHOLDER_IMAGE}
             alt={`${property.title} — photo ${activeIndex + 1}`}
             fill
             className="object-cover object-top brightness-110 contrast-90"

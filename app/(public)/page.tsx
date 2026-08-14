@@ -3,11 +3,14 @@ import StatsSection from '@/components/sections/StatsSection'
 import FeaturedSection from '@/components/sections/FeaturedSection'
 import CtaSection from '@/components/sections/CtaSection'
 import FadeInOnScroll from '@/components/ui/FadeInOnScroll'
-import properties from '@/data/properties.json'
-import type { Property } from '@/types/property'
+import { getFeaturedProperties } from '@/lib/properties'
 
-export default function Home() {
-  const featured = (properties as Property[]).filter((p) => p.featured)
+// Lecture directe de la base à chaque requête : une modification en
+// administration est visible immédiatement, sans redéploiement.
+export const dynamic = 'force-dynamic'
+
+export default async function Home() {
+  const featured = await getFeaturedProperties()
 
   return (
     <>
@@ -15,9 +18,11 @@ export default function Home() {
       <FadeInOnScroll>
         <StatsSection />
       </FadeInOnScroll>
-      <FadeInOnScroll>
-        <FeaturedSection properties={featured} />
-      </FadeInOnScroll>
+      {featured.length > 0 && (
+        <FadeInOnScroll>
+          <FeaturedSection properties={featured} />
+        </FadeInOnScroll>
+      )}
       <FadeInOnScroll>
         <CtaSection />
       </FadeInOnScroll>

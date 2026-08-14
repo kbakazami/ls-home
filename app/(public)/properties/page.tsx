@@ -1,7 +1,8 @@
 import type { Metadata } from 'next'
 import PropertyGrid from '@/components/sections/PropertyGrid'
-import properties from '@/data/properties.json'
-import type { Property } from '@/types/property'
+import { getPublishedProperties } from '@/lib/properties'
+
+export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
   title: 'Nos biens — LS HOME',
@@ -9,7 +10,9 @@ export const metadata: Metadata = {
     'Parcourez notre catalogue de villas, appartements, penthouses et locaux commerciaux a Los Santos.',
 }
 
-export default function PropertiesPage() {
+export default async function PropertiesPage() {
+  const properties = await getPublishedProperties()
+
   return (
     <section className="py-24">
       <div className="mx-auto max-w-7xl px-6">
@@ -26,7 +29,7 @@ export default function PropertiesPage() {
         </p>
 
         <div className="mt-12">
-          <PropertyGrid properties={properties as Property[]} />
+          <PropertyGrid properties={properties} />
         </div>
       </div>
     </section>

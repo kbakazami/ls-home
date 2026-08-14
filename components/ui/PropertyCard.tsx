@@ -1,14 +1,15 @@
 import Image from 'next/image'
+import { formatPrice } from '@/lib/format'
 import type { Property } from '@/types/property'
+
+/** Visuel neutre affiche tant qu'aucune photo n'a ete televersee. */
+export const PLACEHOLDER_IMAGE =
+  'data:image/svg+xml;charset=utf-8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22800%22 height=%22600%22%3E%3Crect width=%22800%22 height=%22600%22 fill=%22%23e2e8f0%22/%3E%3C/svg%3E'
 
 interface PropertyCardProps {
   property: Property
   onClick?: () => void
   priority?: boolean
-}
-
-function formatPrice(value: number): string {
-  return new Intl.NumberFormat('fr-FR').format(value) + ' $'
 }
 
 export default function PropertyCard({ property, onClick, priority = false }: PropertyCardProps) {
@@ -18,9 +19,9 @@ export default function PropertyCard({ property, onClick, priority = false }: Pr
       onClick={onClick}
     >
       {/* Image */}
-      <div className="relative h-48 overflow-hidden">
+      <div className="relative h-48 overflow-hidden bg-border">
         <Image
-          src={property.images[0]}
+          src={property.images[0] ?? PLACEHOLDER_IMAGE}
           alt={property.title}
           fill
           className="object-cover object-center brightness-110 contrast-90 transition-transform duration-500 group-hover:scale-105"
