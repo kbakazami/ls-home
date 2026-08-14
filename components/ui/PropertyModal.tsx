@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
-import { formatPrice } from '@/lib/format'
+import { formatOptionalPrice } from '@/lib/format'
 import { PLACEHOLDER_IMAGE } from '@/components/ui/PropertyCard'
 import type { Property } from '@/types/property'
 
@@ -104,11 +104,11 @@ export default function PropertyModal({ property, onClose }: PropertyModalProps)
           <div className="mt-6 grid grid-cols-2 gap-4 border-t border-b border-border py-6 sm:grid-cols-4">
             <div>
               <p className="text-xs uppercase tracking-widest text-muted">📍 Location</p>
-              <p className="mt-1 text-lg font-semibold text-dark">{formatPrice(property.price_rent)}</p>
+              <p className="mt-1 text-lg font-semibold text-dark">{formatOptionalPrice(property.price_rent)}</p>
             </div>
             <div>
               <p className="text-xs uppercase tracking-widest text-muted">🏠 Achat</p>
-              <p className="mt-1 text-lg font-semibold text-dark">{formatPrice(property.price_buy)}</p>
+              <p className="mt-1 text-lg font-semibold text-dark">{formatOptionalPrice(property.price_buy)}</p>
             </div>
             <div>
               <p className="text-xs uppercase tracking-widest text-muted">👥 Habitabilité</p>

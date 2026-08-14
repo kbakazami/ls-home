@@ -4,7 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useFormStatus } from 'react-dom'
 import { toggleFlag } from '@/app/admin/actions'
-import { formatPrice } from '@/lib/format'
+import { formatOptionalPrice } from '@/lib/format'
 import { cn } from '@/lib/utils'
 import type { Property } from '@/types/property'
 
@@ -85,8 +85,13 @@ export default function PropertyRow({ property }: { property: Property }) {
           {property.title}
         </Link>
         <p className="mt-0.5 text-xs text-muted">
-          {property.type} · {formatPrice(property.price_rent)} / mois ·{' '}
-          {formatPrice(property.price_buy)} a l&apos;achat
+          {property.type}
+          {property.price_rent !== null &&
+            ` · ${formatOptionalPrice(property.price_rent)} / mois`}
+          {property.price_buy !== null &&
+            ` · ${formatOptionalPrice(property.price_buy)} a l'achat`}
+          {property.price_rent === null && ' · location indisponible'}
+          {property.price_buy === null && ' · achat indisponible'}
         </p>
         <p className="mt-0.5 font-mono text-[11px] text-muted">{property.id}</p>
       </div>

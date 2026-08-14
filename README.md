@@ -30,6 +30,7 @@ npm run dev
 2. Ouvrir **SQL Editor** et executer les migrations de `supabase/migrations/` **dans l'ordre** :
    - `0001_init.sql` — tables `properties` et `profiles`, politiques RLS, bucket `property-images`
    - `0002_property_types.sql` — table `property_types`, categories gerables depuis l'administration
+   - `0003_optional_prices.sql` — prix optionnels : un bien peut n'etre qu'a la location ou qu'a la vente
 3. Dans **Settings → API**, recuperer :
    - `Project URL` → `NEXT_PUBLIC_SUPABASE_URL`
    - cle `anon public` → `NEXT_PUBLIC_SUPABASE_ANON_KEY`
@@ -44,11 +45,7 @@ npm run dev
 
    Cet administrateur pourra ensuite creer les autres comptes depuis `/admin/agents`.
 
-5. Importer les biens existants de `data/properties.json` :
-
-   ```bash
-   npm run migrate
-   ```
+5. Se connecter sur `/login` et creer les biens depuis `/admin/biens`.
 
 ---
 
@@ -59,7 +56,6 @@ npm run dev
 | `NEXT_PUBLIC_SUPABASE_URL` | URL du projet Supabase |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Cle publique, bridee par la RLS |
 | `SUPABASE_SERVICE_ROLE_KEY` | Cle privilegiee — gestion des comptes et scripts. **Jamais cote client** |
-| `GOOGLE_SHEET_ID` | Optionnel, uniquement pour l'import de secours `npm run sync` |
 
 Ces trois premieres variables doivent aussi etre declarees dans Vercel
 (*Settings → Environment Variables*).
@@ -86,6 +82,11 @@ Le bien apparait immediatement sur `/properties`, sans redeploiement.
 Un bien laisse en brouillon reste invisible du public — pratique pour preparer une
 annonce, ou pour retirer un bien vendu sans le supprimer.
 
+**Location seule ou vente seule** : dans le formulaire, decocher *Disponible a l'achat*
+(ou *a la location*) desactive le champ de prix correspondant. Le site affiche alors
+« Non disponible » a la place du montant. Un bien doit rester disponible par au moins
+un des deux canaux — la base le verifie.
+
 **Categories** : `/admin/categories` gere la liste des types proposes dans le formulaire.
 Renommer une categorie met a jour tous les biens qui l'utilisent (cle etrangere en
 `on update cascade`) ; une categorie encore rattachee a un bien ne peut pas etre
@@ -102,20 +103,11 @@ publies : une categorie sans bien publie n'y apparait pas.
 npm run dev       # Serveur de developpement
 npm run build     # Build de production
 npm run lint      # ESLint
-npm run migrate   # Import unique data/properties.json → Supabase
-npm run sync      # Import de secours Google Sheet → Supabase (voir ci-dessous)
 ```
 
-### A propos de `npm run sync`
-
-La source de verite est desormais **Supabase**, alimentee par l'administration.
-`scripts/sync.ts` est conserve comme filet de secours pour un import en masse depuis
-un Google Sheet : il fait un *upsert* sur l'identifiant, ecrase donc les biens
-existants portant le meme `id`, et ne supprime jamais rien. A n'utiliser qu'en
-connaissance de cause.
-
-`data/properties.json` est gele : c'est la sauvegarde de l'ancien systeme, plus
-aucune page ne le lit.
+La source de verite est Supabase, alimentee par l'administration. Il n'y a plus aucun
+script d'import : l'ancienne synchro Google Sheet et le script de bascule initiale ont
+ete retires une fois la migration faite.
 
 ---
 
@@ -137,7 +129,6 @@ lib/
   property-types.ts Lecture des categories
   auth.ts          requireAgent / requireAdmin
   format.ts        formatPrice, slugify
-scripts/           migrate-to-supabase.ts, sync.ts
 supabase/migrations/  Schema SQL
 types/property.ts  Schemas Zod + types
 proxy.ts           Rafraichissement de session et protection de /admin

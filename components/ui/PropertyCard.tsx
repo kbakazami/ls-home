@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { formatPrice } from '@/lib/format'
+import { formatOptionalPrice } from '@/lib/format'
 import type { Property } from '@/types/property'
 
 /** Visuel neutre affiche tant qu'aucune photo n'a ete televersee. */
@@ -40,8 +40,8 @@ export default function PropertyCard({ property, onClick, priority = false }: Pr
         </h3>
 
         <div className="mt-4 grid grid-cols-2 gap-2 border-t border-border pt-4 text-sm text-dark">
-          <span>📍 Location : {formatPrice(property.price_rent)}</span>
-          <span>🏠 Achat : {formatPrice(property.price_buy)}</span>
+          <span>📍 Location : {formatOptionalPrice(property.price_rent)}</span>
+          <span>🏠 Achat : {formatOptionalPrice(property.price_buy)}</span>
           <span>👥 Habitabilité : {property.habitants} habitant{property.habitants > 1 ? 's' : ''}</span>
           <span>📦 Capacité : {property.capacity} kg</span>
         </div>

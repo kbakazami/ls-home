@@ -51,6 +51,57 @@ function Field({
 const inputClass =
   'w-full border border-border bg-surface px-4 py-3 text-dark outline-none focus:border-primary'
 
+/**
+ * Prix assorti d'une case de disponibilite. Decocher desactive le champ :
+ * le prix est alors enregistre a null, soit « non disponible ».
+ */
+function PriceField({
+  label,
+  name,
+  availabilityName,
+  availabilityLabel,
+  initialPrice,
+  error,
+}: {
+  label: string
+  name: string
+  availabilityName: string
+  availabilityLabel: string
+  initialPrice: number | null
+  error?: string
+}) {
+  const [available, setAvailable] = useState(initialPrice !== null)
+
+  return (
+    <Field label={label} htmlFor={name} error={error}>
+      <input
+        id={name}
+        name={name}
+        type="number"
+        min={1}
+        required={available}
+        disabled={!available}
+        defaultValue={initialPrice ?? ''}
+        placeholder={available ? undefined : 'Non disponible'}
+        className={cn(
+          inputClass,
+          !available && 'cursor-not-allowed bg-light text-muted',
+        )}
+      />
+      <label className="mt-2 flex items-center gap-2 text-sm text-dark">
+        <input
+          type="checkbox"
+          name={availabilityName}
+          checked={available}
+          onChange={(e) => setAvailable(e.target.checked)}
+          className="h-4 w-4 accent-[var(--color-primary)]"
+        />
+        {availabilityLabel}
+      </label>
+    </Field>
+  )
+}
+
 function SubmitButton({ label }: { label: string }) {
   const { pending } = useFormStatus()
   return (
@@ -164,27 +215,23 @@ export default function PropertyForm({
           />
         </Field>
 
-        <Field label="Loyer mensuel ($)" htmlFor="price_rent" error={errors.price_rent}>
-          <input
-            id="price_rent"
-            name="price_rent"
-            type="number"
-            min={0}
-            defaultValue={property?.price_rent ?? 0}
-            className={inputClass}
-          />
-        </Field>
+        <PriceField
+          label="Loyer mensuel ($)"
+          name="price_rent"
+          availabilityName="rent_available"
+          availabilityLabel="Disponible a la location"
+          initialPrice={property?.price_rent ?? null}
+          error={errors.price_rent}
+        />
 
-        <Field label="Prix d'achat ($)" htmlFor="price_buy" error={errors.price_buy}>
-          <input
-            id="price_buy"
-            name="price_buy"
-            type="number"
-            min={0}
-            defaultValue={property?.price_buy ?? 0}
-            className={inputClass}
-          />
-        </Field>
+        <PriceField
+          label="Prix d'achat ($)"
+          name="price_buy"
+          availabilityName="buy_available"
+          availabilityLabel="Disponible a l'achat"
+          initialPrice={property?.price_buy ?? null}
+          error={errors.price_buy}
+        />
 
         <Field label="Habitants maximum" htmlFor="habitants" error={errors.habitants}>
           <input

@@ -25,8 +25,9 @@ const formSchema = z.object({
   title: z.string().trim().min(1, 'Titre requis'),
   // La validite est garantie par la cle etrangere vers `property_types`.
   type: z.string().trim().min(1, 'Categorie requise'),
-  price_rent: z.coerce.number().int().min(0, 'Doit etre positif'),
-  price_buy: z.coerce.number().int().min(0, 'Doit etre positif'),
+  // null = bien non disponible via ce canal.
+  price_rent: z.coerce.number().int().positive('Indiquez un montant').nullable(),
+  price_buy: z.coerce.number().int().positive('Indiquez un montant').nullable(),
   habitants: z.coerce.number().int().min(0, 'Doit etre positif'),
   capacity: z.coerce.number().int().min(0, 'Doit etre positif'),
   sort_order: z.coerce.number().int(),
@@ -35,6 +36,10 @@ const formSchema = z.object({
   published: z.coerce.boolean(),
   images: z.array(z.url()),
 })
+  .refine((v) => v.price_rent !== null || v.price_buy !== null, {
+    message: 'Le bien doit etre disponible au moins a la location ou a l\'achat',
+    path: ['price_rent'],
+  })
 
 function parseForm(formData: FormData) {
   const rawImages = formData.get('images')
@@ -47,12 +52,17 @@ function parseForm(formData: FormData) {
     }
   }
 
+  // Une case decochee signifie « non disponible » : le prix vaut alors null,
+  // quelle que soit la valeur restee dans le champ desactive.
+  const rentAvailable = formData.get('rent_available') === 'on'
+  const buyAvailable = formData.get('buy_available') === 'on'
+
   return formSchema.safeParse({
     id: formData.get('id') ?? '',
     title: formData.get('title') ?? '',
     type: formData.get('type'),
-    price_rent: formData.get('price_rent') || 0,
-    price_buy: formData.get('price_buy') || 0,
+    price_rent: rentAvailable ? formData.get('price_rent') || 0 : null,
+    price_buy: buyAvailable ? formData.get('price_buy') || 0 : null,
     habitants: formData.get('habitants') || 0,
     capacity: formData.get('capacity') || 0,
     sort_order: formData.get('sort_order') || 0,

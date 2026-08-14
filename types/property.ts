@@ -22,8 +22,9 @@ export const propertySchema = z.object({
     .regex(/^[a-z0-9-]+$/, 'Uniquement des minuscules, chiffres et tirets'),
   title: z.string().min(1, 'Titre requis'),
   type: z.string().min(1, 'Categorie requise'),
-  price_rent: z.number().int().min(0),
-  price_buy: z.number().int().min(0),
+  // null = bien non disponible via ce canal (location seule, ou vente seule).
+  price_rent: z.number().int().positive().nullable(),
+  price_buy: z.number().int().positive().nullable(),
   habitants: z.number().int().min(0),
   capacity: z.number().int().min(0),
   featured: z.boolean(),
