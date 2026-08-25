@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Logo from './Logo'
 
 export default function Footer() {
   return (
@@ -7,10 +8,8 @@ export default function Footer() {
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
           {/* Brand */}
           <div>
-            <span className="font-display text-2xl font-bold tracking-wider text-primary">
-              LS HOME
-            </span>
-            <p className="mt-3 text-sm leading-relaxed">
+            <Logo className="h-24" />
+            <p className="mt-4 text-sm leading-relaxed">
               Votre agence immobiliere de prestige a Los Santos.
               Villas, appartements et penthouses dans les quartiers les plus prisees.
             </p>

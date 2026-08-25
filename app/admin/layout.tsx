@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import AdminNav from '@/components/admin/AdminNav'
+import Logo from '@/components/layout/Logo'
 import { requireAgent } from '@/lib/auth'
 import { signOut } from '@/app/login/actions'
 
@@ -20,11 +21,16 @@ export default async function AdminLayout({
     <div className="min-h-screen bg-light">
       <header className="border-b border-border bg-surface">
         <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-6 py-4">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-primary">
-              Administration
-            </p>
-            <p className="font-display text-xl font-bold text-dark">LS HOME</p>
+          <div className="flex items-center gap-3">
+            <span className="flex h-12 w-12 shrink-0 items-center justify-center bg-dark">
+              <Logo className="h-9" />
+            </span>
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.3em] text-primary">
+                Administration
+              </p>
+              <p className="font-display text-xl font-bold text-dark">LS HOME</p>
+            </div>
           </div>
 
           <div className="flex items-center gap-4 text-sm">

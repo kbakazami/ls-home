@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import Logo from '@/components/layout/Logo'
 import LoginForm from './LoginForm'
 
 export const metadata: Metadata = {
@@ -16,26 +17,32 @@ export default async function LoginPage({
 
   return (
     <section className="flex min-h-screen flex-1 items-center justify-center px-6 py-24">
-      <div className="w-full max-w-md border border-border bg-surface p-8 sm:p-10">
-        <p className="text-xs font-semibold uppercase tracking-[0.3em] text-primary">
-          Espace agents
-        </p>
-        <h1 className="mt-2 font-display text-3xl font-bold text-dark">
-          Connexion
-        </h1>
-        <p className="mt-3 text-sm text-muted">
-          Reserve aux agents LS HOME. Contactez un administrateur pour obtenir
-          un acces.
-        </p>
+      <div className="w-full max-w-md border border-border bg-surface">
+        <div className="flex justify-center bg-dark py-8">
+          <Logo className="h-28" priority />
+        </div>
 
-        <LoginForm redirectTo={redirect} />
+        <div className="p-8 sm:p-10">
+          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-primary">
+            Espace agents
+          </p>
+          <h1 className="mt-2 font-display text-3xl font-bold text-dark">
+            Connexion
+          </h1>
+          <p className="mt-3 text-sm text-muted">
+            Reserve aux agents LS HOME. Contactez un administrateur pour obtenir
+            un acces.
+          </p>
 
-        <Link
-          href="/"
-          className="mt-6 block text-center text-sm text-muted transition-colors hover:text-primary"
-        >
-          Retour au site
-        </Link>
+          <LoginForm redirectTo={redirect} />
+
+          <Link
+            href="/"
+            className="mt-6 block text-center text-sm text-muted transition-colors hover:text-primary"
+          >
+            Retour au site
+          </Link>
+        </div>
       </div>
     </section>
   )

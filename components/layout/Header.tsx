@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useState } from 'react'
+import Logo from './Logo'
 import { cn } from '@/lib/utils'
 
 const navLinks = [
@@ -16,10 +17,10 @@ export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false)
 
   return (
-    <header className="sticky top-0 z-50 bg-surface border-b border-border">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-        <Link href="/" className="font-display text-2xl font-bold tracking-wider text-primary">
-          LS HOME
+    <header className="sticky top-0 z-50 border-b border-white/10 bg-dark">
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-3">
+        <Link href="/" aria-label="Los Santos Homes — accueil" className="shrink-0">
+          <Logo priority className="h-14 md:h-16" />
         </Link>
 
         {/* Desktop nav */}
@@ -32,7 +33,7 @@ export default function Header() {
                 'text-sm uppercase tracking-widest transition-colors',
                 pathname === link.href
                   ? 'text-primary'
-                  : 'text-dark hover:text-primary',
+                  : 'text-white/80 hover:text-primary',
               )}
             >
               {link.label}
@@ -47,15 +48,15 @@ export default function Header() {
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label="Menu"
         >
-          <span className={cn('block h-0.5 w-6 bg-dark transition-transform', menuOpen && 'translate-y-2 rotate-45')} />
-          <span className={cn('block h-0.5 w-6 bg-dark transition-opacity', menuOpen && 'opacity-0')} />
-          <span className={cn('block h-0.5 w-6 bg-dark transition-transform', menuOpen && '-translate-y-2 -rotate-45')} />
+          <span className={cn('block h-0.5 w-6 bg-white transition-transform', menuOpen && 'translate-y-2 rotate-45')} />
+          <span className={cn('block h-0.5 w-6 bg-white transition-opacity', menuOpen && 'opacity-0')} />
+          <span className={cn('block h-0.5 w-6 bg-white transition-transform', menuOpen && '-translate-y-2 -rotate-45')} />
         </button>
       </div>
 
       {/* Mobile menu */}
       {menuOpen && (
-        <nav className="border-t border-border bg-surface px-6 pb-4 md:hidden">
+        <nav className="border-t border-white/10 bg-dark px-6 pb-4 md:hidden">
           {navLinks.map((link) => (
             <Link
               key={link.href}
@@ -65,7 +66,7 @@ export default function Header() {
                 'block py-3 text-sm uppercase tracking-widest transition-colors',
                 pathname === link.href
                   ? 'text-primary'
-                  : 'text-dark hover:text-primary',
+                  : 'text-white/80 hover:text-primary',
               )}
             >
               {link.label}
