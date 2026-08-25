@@ -1,5 +1,10 @@
 import Image from 'next/image'
-import { formatCapacity, formatOptionalPrice } from '@/lib/format'
+import {
+  DEFAULT_OCCUPANCY_LABEL,
+  formatCapacity,
+  formatOccupancy,
+  formatOptionalPrice,
+} from '@/lib/format'
 import type { Property } from '@/types/property'
 
 /** Visuel neutre affiche tant qu'aucune photo n'a ete televersee. */
@@ -10,9 +15,16 @@ interface PropertyCardProps {
   property: Property
   onClick?: () => void
   priority?: boolean
+  /** Unite d'occupation de la categorie, au singulier. */
+  occupancyLabel?: string
 }
 
-export default function PropertyCard({ property, onClick, priority = false }: PropertyCardProps) {
+export default function PropertyCard({
+  property,
+  onClick,
+  priority = false,
+  occupancyLabel = DEFAULT_OCCUPANCY_LABEL,
+}: PropertyCardProps) {
   return (
     <article
       className="group cursor-pointer overflow-hidden border border-border bg-surface transition-shadow hover:shadow-lg"
@@ -42,8 +54,8 @@ export default function PropertyCard({ property, onClick, priority = false }: Pr
         <div className="mt-4 grid grid-cols-2 gap-2 border-t border-border pt-4 text-sm text-dark">
           <span>📍 Location : {formatOptionalPrice(property.price_rent)}</span>
           <span>🏠 Achat : {formatOptionalPrice(property.price_buy)}</span>
-          <span>👥 Habitabilité : {property.habitants} habitant{property.habitants > 1 ? 's' : ''}</span>
-          <span>📦 Capacité : {formatCapacity(property.capacity_min, property.capacity_max)}</span>
+          <span>👥 Capacité : {formatOccupancy(property.habitants, occupancyLabel)}</span>
+          <span>📦 Stockage : {formatCapacity(property.capacity_min, property.capacity_max)}</span>
         </div>
       </div>
     </article>

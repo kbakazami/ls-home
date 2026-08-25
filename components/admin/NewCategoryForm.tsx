@@ -61,8 +61,30 @@ export default function NewCategoryForm() {
             className="mt-2 w-full border border-border bg-surface px-4 py-3 text-dark outline-none focus:border-primary"
           />
         </div>
+
+        <div className="min-w-[14rem] flex-1">
+          <label
+            htmlFor="new_category_occupancy"
+            className="text-xs font-semibold uppercase tracking-widest text-muted"
+          >
+            Unite d&apos;occupation
+          </label>
+          <input
+            id="new_category_occupancy"
+            name="occupancy_label"
+            maxLength={30}
+            placeholder="habitant"
+            className="mt-2 w-full border border-border bg-surface px-4 py-3 text-dark outline-none focus:border-primary"
+          />
+        </div>
         <SubmitButton />
       </div>
+
+      <p className="mt-3 text-xs text-muted">
+        Au singulier, en minuscules : « habitant » pour un logement,
+        « vehicule » pour un garage. Le pluriel est ajoute automatiquement.
+        Laissez vide pour « habitant ».
+      </p>
 
       {state.error && (
         <p role="alert" className="mt-4 border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">

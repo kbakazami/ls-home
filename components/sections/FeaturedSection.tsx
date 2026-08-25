@@ -4,9 +4,14 @@ import type { Property } from '@/types/property'
 
 interface FeaturedSectionProps {
   properties: Property[]
+  /** Unite d'occupation par libelle de categorie. Voir getOccupancyLabels(). */
+  occupancyLabels: Record<string, string>
 }
 
-export default function FeaturedSection({ properties }: FeaturedSectionProps) {
+export default function FeaturedSection({
+  properties,
+  occupancyLabels,
+}: FeaturedSectionProps) {
   return (
     <section className="py-24">
       <div className="mx-auto max-w-7xl px-6">
@@ -24,7 +29,11 @@ export default function FeaturedSection({ properties }: FeaturedSectionProps) {
         <div className="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {properties.map((property, index) => (
             <FadeInOnScroll key={property.id} delay={index * 0.1}>
-              <PropertyCard property={property} priority={index < 3} />
+              <PropertyCard
+                property={property}
+                priority={index < 3}
+                occupancyLabel={occupancyLabels[property.type]}
+              />
             </FadeInOnScroll>
           ))}
         </div>

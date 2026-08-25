@@ -9,6 +9,7 @@ import {
   renameCategory,
   type CategoryState,
 } from '@/app/admin/categories/actions'
+import { occupancyHeading } from '@/lib/format'
 import type { PropertyTypeOption } from '@/types/property'
 
 function MoveButton({ label }: { label: string }) {
@@ -86,7 +87,19 @@ export default function CategoryRow({
                 name="label"
                 defaultValue={category.label}
                 autoFocus
+                aria-label="Libelle de la categorie"
                 className="flex-1 border border-border bg-surface px-3 py-2 text-sm outline-none focus:border-primary"
+              />
+              {/* Toujours renvoye : sans lui, un simple renommage
+                  reinitialiserait l'unite d'occupation. */}
+              <input
+                name="occupancy_label"
+                defaultValue={category.occupancy_label}
+                maxLength={30}
+                placeholder="habitant"
+                aria-label="Unite d'occupation, au singulier"
+                title="Unite d'occupation, au singulier : habitant, vehicule..."
+                className="w-40 border border-border bg-surface px-3 py-2 text-sm outline-none focus:border-primary"
               />
               <SaveButton />
               <button
@@ -101,6 +114,9 @@ export default function CategoryRow({
             <>
               <p className="font-display font-semibold text-dark">
                 {category.label}
+                <span className="ml-2 text-xs font-normal text-muted">
+                  · {occupancyHeading(category.occupancy_label).toLowerCase()}
+                </span>
               </p>
               <p className="mt-0.5 text-xs text-muted">
                 {usage === 0 ? (
@@ -125,7 +141,7 @@ export default function CategoryRow({
               onClick={() => setEditing(true)}
               className="border border-border px-3 py-1.5 text-xs font-semibold uppercase tracking-wider text-muted transition-colors hover:border-primary hover:text-primary"
             >
-              Renommer
+              Modifier
             </button>
 
             {usage === 0 ? (

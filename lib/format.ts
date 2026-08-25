@@ -17,6 +17,24 @@ export function formatCapacity(min: number, max: number): string {
     : `${numberFormatter.format(min)} - ${numberFormatter.format(max)} kg`
 }
 
+/** Unite d'occupation retenue quand la categorie n'en precise aucune. */
+export const DEFAULT_OCCUPANCY_LABEL = 'habitant'
+
+/**
+ * Occupation d'un bien, accordee : « 4 habitants », « 1 vehicule ».
+ * `unit` est l'unite au singulier portee par la categorie.
+ */
+export function formatOccupancy(count: number, unit: string): string {
+  const label = unit.trim() || DEFAULT_OCCUPANCY_LABEL
+  return `${numberFormatter.format(count)} ${count > 1 ? `${label}s` : label}`
+}
+
+/** Intitule de rubrique associe a une unite : « Habitants », « Vehicules ». */
+export function occupancyHeading(unit: string): string {
+  const label = unit.trim() || DEFAULT_OCCUPANCY_LABEL
+  return `${label.charAt(0).toUpperCase()}${label.slice(1)}s`
+}
+
 /** Transforme un titre en slug utilisable comme identifiant de bien. */
 export function slugify(value: string): string {
   return value

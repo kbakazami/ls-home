@@ -4,16 +4,28 @@ import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
-import { formatCapacity, formatOptionalPrice } from '@/lib/format'
+import {
+  DEFAULT_OCCUPANCY_LABEL,
+  formatCapacity,
+  formatOccupancy,
+  formatOptionalPrice,
+  occupancyHeading,
+} from '@/lib/format'
 import { PLACEHOLDER_IMAGE } from '@/components/ui/PropertyCard'
 import type { Property } from '@/types/property'
 
 interface PropertyModalProps {
   property: Property
   onClose: () => void
+  /** Unite d'occupation de la categorie, au singulier. */
+  occupancyLabel?: string
 }
 
-export default function PropertyModal({ property, onClose }: PropertyModalProps) {
+export default function PropertyModal({
+  property,
+  onClose,
+  occupancyLabel = DEFAULT_OCCUPANCY_LABEL,
+}: PropertyModalProps) {
   const [activeIndex, setActiveIndex] = useState(0)
 
   useEffect(() => {
@@ -111,11 +123,15 @@ export default function PropertyModal({ property, onClose }: PropertyModalProps)
               <p className="mt-1 text-lg font-semibold text-dark">{formatOptionalPrice(property.price_buy)}</p>
             </div>
             <div>
-              <p className="text-xs uppercase tracking-widest text-muted">👥 Habitabilité</p>
-              <p className="mt-1 text-lg font-semibold text-dark">{property.habitants} habitant{property.habitants > 1 ? 's' : ''}</p>
+              <p className="text-xs uppercase tracking-widest text-muted">
+                👥 {occupancyHeading(occupancyLabel)}
+              </p>
+              <p className="mt-1 text-lg font-semibold text-dark">
+                {formatOccupancy(property.habitants, occupancyLabel)}
+              </p>
             </div>
             <div>
-              <p className="text-xs uppercase tracking-widest text-muted">📦 Capacité</p>
+              <p className="text-xs uppercase tracking-widest text-muted">📦 Stockage</p>
               <p className="mt-1 text-lg font-semibold text-dark">
                 {formatCapacity(property.capacity_min, property.capacity_max)}
               </p>

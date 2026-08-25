@@ -4,7 +4,7 @@ import { useActionState, useState } from 'react'
 import { useFormStatus } from 'react-dom'
 import Link from 'next/link'
 import ImageUploader from '@/components/admin/ImageUploader'
-import { slugify } from '@/lib/format'
+import { DEFAULT_OCCUPANCY_LABEL, occupancyHeading, slugify } from '@/lib/format'
 import { cn } from '@/lib/utils'
 import type { Property, PropertyTypeOption } from '@/types/property'
 import type { ActionState } from '@/app/admin/actions'
@@ -128,8 +128,17 @@ export default function PropertyForm({
   const [id, setId] = useState(property?.id ?? '')
   const [idTouched, setIdTouched] = useState(isEdit)
   const [images, setImages] = useState<string[]>(property?.images ?? [])
+  const [selectedType, setSelectedType] = useState(
+    property?.type ?? types[0]?.label ?? '',
+  )
 
   const errors = state.fieldErrors ?? {}
+
+  // L'unite d'occupation vient de la categorie : un garage compte des
+  // vehicules la ou une villa compte des habitants.
+  const occupancyUnit =
+    types.find((t) => t.label === selectedType)?.occupancy_label ??
+    DEFAULT_OCCUPANCY_LABEL
 
   function onTitleChange(value: string) {
     setTitle(value)
@@ -189,7 +198,8 @@ export default function PropertyForm({
           <select
             id="type"
             name="type"
-            defaultValue={property?.type ?? types[0]?.label ?? ''}
+            value={selectedType}
+            onChange={(e) => setSelectedType(e.target.value)}
             className={inputClass}
           >
             {types.map((t) => (
@@ -233,7 +243,12 @@ export default function PropertyForm({
           error={errors.price_buy}
         />
 
-        <Field label="Habitants maximum" htmlFor="habitants" error={errors.habitants}>
+        <Field
+          label={`${occupancyHeading(occupancyUnit)} maximum`}
+          htmlFor="habitants"
+          error={errors.habitants}
+          hint="Unite definie par la categorie, dans l'onglet Categories."
+        >
           <input
             id="habitants"
             name="habitants"

@@ -9,9 +9,14 @@ import type { Property } from '@/types/property'
 
 interface PropertyGridProps {
   properties: Property[]
+  /** Unite d'occupation par libelle de categorie. Voir getOccupancyLabels(). */
+  occupancyLabels: Record<string, string>
 }
 
-export default function PropertyGrid({ properties }: PropertyGridProps) {
+export default function PropertyGrid({
+  properties,
+  occupancyLabels,
+}: PropertyGridProps) {
   const [selectedType, setSelectedType] = useState<string>('Tous')
   const [activeProperty, setActiveProperty] = useState<Property | null>(null)
 
@@ -81,6 +86,7 @@ export default function PropertyGrid({ properties }: PropertyGridProps) {
               property={property}
               onClick={() => setActiveProperty(property)}
               priority={index < 3}
+              occupancyLabel={occupancyLabels[property.type]}
             />
           </FadeInOnScroll>
         ))}
@@ -97,6 +103,7 @@ export default function PropertyGrid({ properties }: PropertyGridProps) {
         <PropertyModal
           property={activeProperty}
           onClose={() => setActiveProperty(null)}
+          occupancyLabel={occupancyLabels[activeProperty.type]}
         />
       )}
     </>

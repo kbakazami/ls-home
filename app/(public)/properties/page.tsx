@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import PropertyGrid from '@/components/sections/PropertyGrid'
 import { getPublishedProperties } from '@/lib/properties'
+import { getOccupancyLabels } from '@/lib/property-types'
 
 export const dynamic = 'force-dynamic'
 
@@ -11,7 +12,10 @@ export const metadata: Metadata = {
 }
 
 export default async function PropertiesPage() {
-  const properties = await getPublishedProperties()
+  const [properties, occupancyLabels] = await Promise.all([
+    getPublishedProperties(),
+    getOccupancyLabels(),
+  ])
 
   return (
     <section className="py-24">
@@ -29,7 +33,10 @@ export default async function PropertiesPage() {
         </p>
 
         <div className="mt-12">
-          <PropertyGrid properties={properties} />
+          <PropertyGrid
+            properties={properties}
+            occupancyLabels={occupancyLabels}
+          />
         </div>
       </div>
     </section>

@@ -4,7 +4,7 @@ import { revalidatePath } from 'next/cache'
 import { z } from 'zod'
 import { createClient } from '@/lib/supabase/server'
 import { requireAgent } from '@/lib/auth'
-import { slugify } from '@/lib/format'
+import { DEFAULT_OCCUPANCY_LABEL, slugify } from '@/lib/format'
 
 export interface CategoryState {
   error?: string
@@ -21,6 +21,29 @@ const labelSchema = z
   .min(2, 'Le libelle doit faire au moins 2 caracteres')
   .max(40, 'Le libelle est trop long')
 
+/**
+ * Unite d'occupation, au singulier : le pluriel est ajoute a l'affichage.
+ * Champ absent ou vide = on retombe sur « habitant ».
+ */
+const occupancySchema = z
+  .string()
+  .trim()
+  .min(2, "L'unite d'occupation doit faire au moins 2 caracteres")
+  .max(30, "L'unite d'occupation est trop longue")
+
+function readOccupancy(
+  formData: FormData,
+): { ok: true; value: string } | { ok: false; error: string } {
+  const raw = formData.get('occupancy_label')
+  const value = typeof raw === 'string' ? raw.trim() : ''
+  if (!value) return { ok: true, value: DEFAULT_OCCUPANCY_LABEL }
+
+  const parsed = occupancySchema.safeParse(value)
+  return parsed.success
+    ? { ok: true, value: parsed.data }
+    : { ok: false, error: parsed.error.issues[0].message }
+}
+
 export async function createCategory(
   _prevState: CategoryState,
   formData: FormData,
@@ -31,6 +54,9 @@ export async function createCategory(
   if (!parsed.success) {
     return { error: parsed.error.issues[0].message }
   }
+
+  const occupancy = readOccupancy(formData)
+  if (!occupancy.ok) return { error: occupancy.error }
 
   const label = parsed.data
   const id = slugify(label)
@@ -48,7 +74,12 @@ export async function createCategory(
 
   const { error } = await supabase
     .from('property_types')
-    .insert({ id, label, sort_order: (last?.sort_order ?? 0) + 10 })
+    .insert({
+      id,
+      label,
+      sort_order: (last?.sort_order ?? 0) + 10,
+      occupancy_label: occupancy.value,
+    })
 
   if (error) {
     if (error.code === '23505') {
@@ -73,12 +104,15 @@ export async function renameCategory(
   if (typeof id !== 'string' || !id) return { error: 'Categorie introuvable.' }
   if (!parsed.success) return { error: parsed.error.issues[0].message }
 
+  const occupancy = readOccupancy(formData)
+  if (!occupancy.ok) return { error: occupancy.error }
+
   const supabase = await createClient()
   // La cle etrangere est en ON UPDATE CASCADE : les biens rattaches
   // suivent automatiquement le nouveau libelle.
   const { error } = await supabase
     .from('property_types')
-    .update({ label: parsed.data })
+    .update({ label: parsed.data, occupancy_label: occupancy.value })
     .eq('id', id)
 
   if (error) {
@@ -89,7 +123,7 @@ export async function renameCategory(
   }
 
   revalidateAll()
-  return { success: `Categorie renommee en « ${parsed.data} ».` }
+  return { success: `Categorie « ${parsed.data} » mise a jour.` }
 }
 
 export async function moveCategory(formData: FormData) {

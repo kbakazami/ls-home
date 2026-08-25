@@ -8,6 +8,11 @@ export interface PropertyTypeOption {
   id: string
   label: string
   sort_order: number
+  /**
+   * Unite d'occupation au singulier — « habitant » pour un logement,
+   * « vehicule » pour un garage. Le pluriel est ajoute a l'affichage.
+   */
+  occupancy_label: string
 }
 
 /**
