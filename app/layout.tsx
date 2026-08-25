@@ -17,7 +17,19 @@ const siteDescription =
   'Agence immobiliere de prestige a Los Santos. Villas, appartements et penthouses dans les quartiers les plus exclusifs.'
 const logoPath = '/images/brand/ls-homes-logo.png'
 
+/**
+ * Base servant a resoudre les URLs absolues des apercus de partage.
+ * En production Vercel expose l'URL du projet ; en local on retombe sur
+ * le serveur de developpement. NEXT_PUBLIC_SITE_URL a la priorite.
+ */
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ??
+  (process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+    : 'http://localhost:3000')
+
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: siteTitle,
   description: siteDescription,
   icons: {
