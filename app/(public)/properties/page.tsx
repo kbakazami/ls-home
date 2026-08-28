@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import PropertyGrid from '@/components/sections/PropertyGrid'
 import { getPublishedProperties } from '@/lib/properties'
-import { getOccupancyLabels } from '@/lib/property-types'
+import { getOccupancyLabels, getPropertyTypeLabels } from '@/lib/property-types'
 
 export const dynamic = 'force-dynamic'
 
@@ -12,9 +12,10 @@ export const metadata: Metadata = {
 }
 
 export default async function PropertiesPage() {
-  const [properties, occupancyLabels] = await Promise.all([
+  const [properties, occupancyLabels, typeOrder] = await Promise.all([
     getPublishedProperties(),
     getOccupancyLabels(),
+    getPropertyTypeLabels(),
   ])
 
   return (
@@ -36,6 +37,7 @@ export default async function PropertiesPage() {
           <PropertyGrid
             properties={properties}
             occupancyLabels={occupancyLabels}
+            typeOrder={typeOrder}
           />
         </div>
       </div>

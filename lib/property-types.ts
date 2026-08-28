@@ -17,6 +17,16 @@ export async function getPropertyTypes(): Promise<PropertyTypeOption[]> {
 }
 
 /**
+ * Libelles des categories, dans l'ordre d'affichage choisi en administration.
+ * Destine aux pages publiques qui presentent une liste de types (filtres) et
+ * doivent respecter le meme rangement que `/admin/categories`.
+ */
+export async function getPropertyTypeLabels(): Promise<string[]> {
+  const types = await getPropertyTypes()
+  return types.map((t) => t.label)
+}
+
+/**
  * Unite d'occupation de chaque categorie, indexee par libelle de categorie
  * — c'est ce que porte `properties.type`. Destine aux pages publiques, qui
  * n'ont pas besoin du reste de la categorie.

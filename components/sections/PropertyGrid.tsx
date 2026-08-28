@@ -11,19 +11,32 @@ interface PropertyGridProps {
   properties: Property[]
   /** Unite d'occupation par libelle de categorie. Voir getOccupancyLabels(). */
   occupancyLabels: Record<string, string>
+  /**
+   * Libelles des categories dans l'ordre range en administration.
+   * Voir getPropertyTypeLabels().
+   */
+  typeOrder: string[]
 }
 
 export default function PropertyGrid({
   properties,
   occupancyLabels,
+  typeOrder,
 }: PropertyGridProps) {
   const [selectedType, setSelectedType] = useState<string>('Tous')
   const [activeProperty, setActiveProperty] = useState<Property | null>(null)
 
-  const types = useMemo(
-    () => ['Tous', ...Array.from(new Set(properties.map((p) => p.type)))],
-    [properties],
-  )
+  /**
+   * Seules les categories ayant au moins un bien publie sont proposees, mais
+   * dans l'ordre defini en administration — pas dans l'ordre d'apparition des
+   * biens. Un type absent de `typeOrder` reste propose, en fin de liste.
+   */
+  const types = useMemo(() => {
+    const present = new Set(properties.map((p) => p.type))
+    const ordered = typeOrder.filter((label) => present.has(label))
+    const extras = [...present].filter((label) => !typeOrder.includes(label))
+    return ['Tous', ...ordered, ...extras]
+  }, [properties, typeOrder])
 
   const filtered = useMemo(
     () =>
